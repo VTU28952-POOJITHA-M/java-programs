@@ -1,0 +1,61 @@
+import java.util.*;
+
+class ThroneInheritance {
+
+    // Represents a person and their children
+    static class Person {
+        String name;
+        boolean alive;
+        List<Person> children;
+
+        Person(String name) {
+            this.name = name;
+            this.alive = true;
+            this.children = new ArrayList<>();
+        }
+    }
+
+    private Person king;
+    private Map<String, Person> people;
+
+    // Constructor
+    public ThroneInheritance(String kingName) {
+        king = new Person(kingName);
+        people = new HashMap<>();
+        people.put(kingName, king);
+    }
+
+    // Add a child to the parent's list
+    public void birth(String parentName, String childName) {
+        Person parent = people.get(parentName);
+        Person child = new Person(childName);
+
+        parent.children.add(child);
+        people.put(childName, child);
+    }
+
+    // Mark a person as dead
+    public void death(String name) {
+        people.get(name).alive = false;
+    }
+
+    // Return inheritance order
+    public List<String> getInheritanceOrder() {
+        List<String> result = new ArrayList<>();
+        dfs(king, result);
+        return result;
+    }
+
+    // Preorder DFS
+    private void dfs(Person person, List<String> result) {
+        // Dead people are skipped, but their children are still visited
+        if (person.alive) {
+            result.add(person.name);
+        }
+
+        // Children are visited from oldest to youngest
+        for (Person child : person.children) {
+            dfs(child, result);
+        }
+    }
+}
