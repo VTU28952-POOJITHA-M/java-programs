@@ -1,0 +1,49 @@
+import java.util.*;
+
+public class Solution {
+
+    public static void func(ArrayList mylist) {
+        Iterator it = mylist.iterator();
+
+        // Move iterator until "###"
+        while (it.hasNext()) {
+            Object element = it.next();
+
+            if (element.equals("###")) {
+                break;
+            }
+        }
+
+        // Print everything after "###"
+        while (it.hasNext()) {
+            Object element = it.next();
+            System.out.println(element);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        ArrayList mylist = new ArrayList();
+
+        // Read integers
+        for (int i = 0; i < n; i++) {
+            mylist.add(sc.nextInt());
+        }
+
+        // Read strings
+        for (int i = 0; i < m; i++) {
+            mylist.add(sc.next());
+        }
+
+        // "###" is added by the original problem's main code.
+        mylist.add(n, "###");
+
+        func(mylist);
+
+        sc.close();
+    }
+}
